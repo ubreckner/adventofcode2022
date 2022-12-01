@@ -6,6 +6,7 @@ import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
+import java.time.LocalDate
 import java.util.*
 
 private fun downloadInput(day: Int) {
@@ -20,7 +21,7 @@ private fun downloadInput(day: Int) {
             "cookie",
             properties.getProperty("my.personal.cookie")
         )
-        .header("User-Agent","github.com/ubreckner/adventofcode2022 Contact: Discord @v1per#2213")
+        .header("User-Agent", "github.com/ubreckner/adventofcode2022 Contact: Discord @v1per#2213")
         .build()
 
     val response = client.send(request, HttpResponse.BodyHandlers.ofString())
@@ -30,10 +31,14 @@ private fun downloadInput(day: Int) {
 
 fun loadInput(day: Int): List<String> {
     val file = File("src/main/resources", "Day$day.txt")
-    if (!file.exists()) {
+    val date = LocalDate.now()
+    var res = emptyList<String>()
+
+    if (date.dayOfMonth >= day && !file.exists()) {
         downloadInput(day)
+        res = file.readLines()
     }
-    return file.readLines()
+    return res
 }
 
 fun loadTestInput(day: Int): List<String> {
