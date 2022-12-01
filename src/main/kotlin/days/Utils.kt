@@ -20,6 +20,7 @@ private fun downloadInput(day: Int) {
             "cookie",
             properties.getProperty("my.personal.cookie")
         )
+        .header("User-Agent","github.com/ubreckner/adventofcode2022 Contact: Discord @v1per#2213")
         .build()
 
     val response = client.send(request, HttpResponse.BodyHandlers.ofString())
@@ -31,6 +32,14 @@ fun loadInput(day: Int): List<String> {
     val file = File("src/main/resources", "Day$day.txt")
     if (!file.exists()) {
         downloadInput(day)
+    }
+    return file.readLines()
+}
+
+fun loadTestInput(day: Int): List<String> {
+    val file = File("src/main/resources", "Day$day-test.txt")
+    if (!file.exists()) {
+        return emptyList()
     }
     return file.readLines()
 }
