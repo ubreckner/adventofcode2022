@@ -34,8 +34,10 @@ fun loadInput(day: Int): List<String> {
     val date = LocalDate.now()
     var res = emptyList<String>()
 
-    if (date.dayOfMonth >= day && !file.exists()) {
+    if (date.dayOfMonth >= day) {
         downloadInput(day)
+    }
+    if (file.exists()) {
         res = file.readLines()
     }
     return res
