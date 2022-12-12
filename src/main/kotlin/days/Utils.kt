@@ -34,7 +34,7 @@ fun loadInput(day: Int): List<String> {
     val date = LocalDate.now()
     var res = emptyList<String>()
 
-    if (date.dayOfMonth >= day) {
+    if (date.dayOfMonth >= day && !file.exists()) {
         downloadInput(day)
     }
     if (file.exists()) {
@@ -49,4 +49,13 @@ fun loadTestInput(day: Int): List<String> {
         return emptyList()
     }
     return file.readLines()
+}
+inline fun <reified T> transpose(inputList: List<List<T>>): List<List<T>> {
+    val cols = inputList[0].size
+    val rows = inputList.size
+    return List(cols) { j ->
+        List(rows) { i ->
+            inputList[i][j]
+        }
+    }
 }
